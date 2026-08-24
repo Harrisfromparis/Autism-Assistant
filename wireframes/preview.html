@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iLEARN Wireframe Preview</title>
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    /* ─── Page shell ────────────────────────────────────────────── */
+    .page-header {
+      background: #4f46e5;
+      color: #fff;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .page-header h1 { font-size: 1.25rem; font-weight: 700; }
+    .page-header span { font-size: 0.85rem; opacity: .75; }
+
+    .tabs {
+      display: flex;
+      gap: 4px;
+      padding: 20px 32px 0;
+      border-bottom: 2px solid #e2e8f0;
+      background: #f1f5f9;
+    }
+    .tab {
+      padding: 10px 20px;
+      border-radius: 8px 8px 0 0;
+      border: 2px solid transparent;
+      background: #e2e8f0;
+      cursor: pointer;
+      font-size: .875rem;
+      font-weight: 500;
+      color: #64748b;
+      transition: all .15s;
+    }
+    .tab.active {
+      background: #fff;
+      border-color: #e2e8f0;
+      border-bottom-color: #fff;
+      color: #4f46e5;
+      font-weight: 600;
+    }
+    .tab:hover:not(.active) { background: #cbd5e1; }
+
+    .screens { padding: 0 32px 48px; }
+    .screen { display: none; padding-top: 28px; }
+    .screen.active { display: block; }
+
+    /* ─── Shared components ─────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 600;
+    }
+    .badge-group  { background: #dbeafe; color: #1d4ed8; }
+    .badge-1on1   { background: #fce7f3; color: #9d174d; }
+    .badge-primary { background: #ede9fe; color: #4f46e5; }
+
+    /* ─── SCREEN 1: Teacher Dashboard ───────────────────────────── */
+    .dash-frame {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+      overflow: hidden;
+      max-width: 1100px;
+    }
+
+    /* Top nav */
+    .dash-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #4f46e5;
+      color: #fff;
+      padding: 14px 24px;
+    }
+    .dash-nav .brand { font-weight: 800; font-size: 1.1rem; letter-spacing: -.5px; }
+    .dash-nav .nav-right { display: flex; align-items: center; gap: 16px; font-size: .85rem; }
+    .icon-btn {
+      background: rgba(255,255,255,.2);
+      border: none;
+      border-radius: 8px;
+      padding: 6px 10px;
+      color: #fff;
+      cursor: pointer;
+      font-size: .85rem;
+    }
+    .avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #818cf8;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .8rem; color: #fff;
+    }
+
+    /* Body layout */
+    .dash-body { display: flex; min-height: 560px; }
+
+    .dash-sidebar {
+      width: 200px;
+      background: #f8fafc;
+      border-right: 1px solid #e2e8f0;
+      padding: 24px 0;
+      flex-shrink: 0;
+    }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 20px;
+      font-size: .875rem;
+      color: #64748b;
+      cursor: pointer;
+      transition: background .1s;
+    }
+    .sidebar-item:hover { background: #f1f5f9; }
+    .sidebar-item.active {
+      background: #ede9fe;
+      color: #4f46e5;
+      font-weight: 600;
+      border-right: 3px solid #4f46e5;
+    }
+
+    .dash-main { flex: 1; padding: 28px 28px 32px; overflow-x: auto; }
+    .dash-greeting { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; }
+
+    /* KPI cards */
+    .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+    .kpi-card {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 20px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    }
+    .kpi-card .kpi-icon { font-size: 1.4rem; margin-bottom: 8px; }
+    .kpi-card .kpi-label { font-size: .78rem; color: #64748b; text-transform: uppercase; letter-spacing: .04em; }
+    .kpi-card .kpi-value { font-size: 1.8rem; font-weight: 800; color: #1e293b; line-height: 1.1; }
+    .kpi-card .kpi-trend { font-size: .78rem; color: #22c55e; margin-top: 4px; }
+
+    /* Section heading */
+    .section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .section-head h3 { font-size: 1rem; font-weight: 700; }
+    .btn-sm {
+      background: #fff;
+      border: 1.5px solid #4f46e5;
+      color: #4f46e5;
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-sm:hover { background: #ede9fe; }
+
+    /* Class table */
+    .class-table { width: 100%; border-collapse: collapse; font-size: .875rem; margin-bottom: 28px; }
+    .class-table th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: #94a3b8;
+      border-bottom: 1.5px solid #e2e8f0;
+    }
+    .class-table td { padding: 12px 12px; border-bottom: 1px solid #f1f5f9; }
+    .class-table tr:last-child td { border-bottom: none; }
+    .student-name { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+    .stu-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #c7d2fe;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700; color: #4f46e5;
+    }
+    .progress-wrap { display: flex; align-items: center; gap: 8px; }
+    .progress-bar {
+      flex: 1; height: 7px; background: #e2e8f0; border-radius: 999px; overflow: hidden;
+      min-width: 80px;
+    }
+    .progress-fill { height: 100%; background: #4f46e5; border-radius: 999px; }
+
+    /* Sessions */
+    .session-list { display: flex; flex-direction: column; gap: 10px; }
+    .session-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      background: #fafafe;
+    }
+    .session-time { font-size: .78rem; font-weight: 700; color: #64748b; min-width: 70px; }
+    .session-title { font-size: .875rem; font-weight: 600; flex: 1; }
+
+    /* ─── SCREEN 2: Student Learning Path ───────────────────────── */
+    .mobile-shell {
+      width: 375px;
+      min-height: 812px;
+      background: #fff;
+      border-radius: 40px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.14);
+      overflow: hidden;
+      margin: 0 auto;
+      border: 8px solid #1e293b;
+      position: relative;
+    }
+    .mobile-topbar {
+      background: #4f46e5;
+      color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      font-weight: 700;
+    }
+    .mobile-topbar .back { font-size: 1.1rem; cursor: pointer; }
+    .mobile-body { padding: 20px; }
+    .mob-greeting { font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
+    .mob-sub { font-size: .85rem; color: #64748b; margin-bottom: 18px; }
+
+    .overall-progress { margin-bottom: 24px; }
+    .overall-progress .prog-label { font-size: .8rem; color: #64748b; margin-bottom: 6px; font-weight: 600; }
+    .big-bar { height: 12px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-bottom: 4px; }
+    .big-fill { height: 100%; background: #4f46e5; border-radius: 999px; width: 60%; }
+    .prog-count { font-size: .78rem; color: #94a3b8; }
+
+    .path-heading { font-size: .95rem; font-weight: 700; margin-bottom: 12px; }
+    .lesson-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .lesson-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: .875rem;
+      font-weight: 500;
+      border: 1.5px solid #e2e8f0;
+    }
+    .lesson-item.completed { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+    .lesson-item.current   { background: #eef2ff; border-color: #a5b4fc; color: #3730a3; font-weight: 700; }
+    .lesson-item.locked    { background: #f8fafc; border-color: #e2e8f0; color: #94a3b8; }
+    .lesson-icon { font-size: 1rem; flex-shrink: 0; }
+
+    .cta-btn {
+      display: block; width: 100%;
+      background: #4f46e5; color: #fff;
+      border: none; border-radius: 12px;
+      padding: 14px;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      margin-bottom: 24px;
+      transition: background .15s;
+    }
+    .cta-btn:hover { background: #4338ca; }
+
+    .badge-section h4 { font-size: .9rem; font-weight: 700; margin-bottom: 10px; }
+    .badge-card {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px;
+      border: 1.5px solid #fde68a;
+      border-radius: 12px;
+      background: #fffbeb;
+    }
+    .badge-icon { font-size: 1.8rem; }
+    .badge-card .badge-name { font-weight: 700; font-size: .9rem; }
+    .badge-card .badge-date { font-size: .78rem; color: #92400e; }
+
+    /* ─── SCREEN 3: Progress Report ────────────────────────────── */
+    .report-frame {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+      overflow: hidden;
+      max-width: 1100px;
+    }
+    .report-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 28px;
+      background: #f8fafc;
+      border-bottom: 1.5px solid #e2e8f0;
+      font-size: .85rem;
+    }
+    .breadcrumb { display: flex; align-items: center; gap: 6px; color: #64748b; }
+    .breadcrumb .sep { color: #cbd5e1; }
+    .breadcrumb .current { color: #1e293b; font-weight: 600; }
+    .report-actions { display: flex; gap: 10px; }
+    .btn-export {
+      background: #fff; border: 1.5px solid #4f46e5; color: #4f46e5;
+      border-radius: 8px; padding: 6px 14px; font-size: .8rem; font-weight: 600; cursor: pointer;
+    }
+    .btn-export:hover { background: #ede9fe; }
+
+    .report-body { display: flex; }
+    .report-sidebar {
+      width: 180px; background: #f8fafc;
+      border-right: 1px solid #e2e8f0;
+      padding: 24px 0;
+      flex-shrink: 0;
+    }
+    .time-tab {
+      padding: 10px 20px;
+      font-size: .85rem; font-weight: 500; color: #64748b;
+      cursor: pointer;
+    }
+    .time-tab.active { color: #4f46e5; font-weight: 700; background: #ede9fe; border-right: 3px solid #4f46e5; }
+    .time-tab:hover:not(.active) { background: #f1f5f9; }
+
+    .report-main { flex: 1; padding: 24px 28px; }
+
+    .student-header {
+      display: flex; align-items: center; gap: 16px;
+      padding-bottom: 20px; border-bottom: 1.5px solid #e2e8f0; margin-bottom: 24px;
+    }
+    .big-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: #c7d2fe;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: 800; color: #4f46e5;
+    }
+    .stu-info h2 { font-size: 1.15rem; font-weight: 800; }
+    .stu-meta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+    .stu-meta span { font-size: .78rem; color: #64748b; background: #f1f5f9; border-radius: 6px; padding: 2px 8px; }
+
+    /* chart */
+    .chart-section { margin-bottom: 28px; }
+    .chart-section h3 { font-size: .95rem; font-weight: 700; margin-bottom: 14px; }
+    .chart-area {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+    .chart-svg { width: 100%; height: 140px; }
+
+    /* notes */
+    .notes-section h3 { font-size: .95rem; font-weight: 700; margin-bottom: 12px; }
+    .note-item {
+      display: flex; gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: .875rem;
+    }
+    .note-date { min-width: 56px; font-size: .78rem; font-weight: 700; color: #64748b; padding-top: 2px; }
+    .note-text { flex: 1; color: #334155; line-height: 1.5; }
+    .add-note-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px;
+      background: none; border: 1.5px dashed #cbd5e1;
+      border-radius: 8px; padding: 7px 14px;
+      font-size: .82rem; color: #64748b; cursor: pointer;
+    }
+    .add-note-btn:hover { border-color: #4f46e5; color: #4f46e5; }
+
+    /* ─── Screen label strip ────────────────────────────────────── */
+    .screen-meta {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .screen-meta .screen-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; }
+    .screen-meta .screen-sub { font-size: .82rem; color: #64748b; }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>iLEARN — Wireframe Preview</h1>
+    <span>AI-native wireframing toolchain · Open Design · Draftboard · WireMD</span>
+  </div>
+</div>
+
+<!-- Tab bar -->
+<div class="tabs">
+  <div class="tab active" onclick="showScreen('teacher-dashboard', this)">🏫 Teacher Dashboard</div>
+  <div class="tab" onclick="showScreen('student-path', this)">📱 Student Learning Path</div>
+  <div class="tab" onclick="showScreen('progress-report', this)">📊 Progress Report</div>
+</div>
+
+<div class="screens">
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN 1: Teacher Dashboard
+  ══════════════════════════════════════════════════════════════ -->
+  <div id="teacher-dashboard" class="screen active">
+    <div class="screen-meta">
+      <span class="screen-title">Teacher Dashboard</span>
+      <span class="screen-sub">Desktop · 1440×900 · Draftboard + WireMD</span>
+    </div>
+    <div class="dash-frame">
+
+      <!-- Nav -->
+      <nav class="dash-nav">
+        <span class="brand">iLEARN</span>
+        <div class="nav-right">
+          <button class="icon-btn">🔔 Notifications</button>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="avatar">MH</div>
+            <span>Ms. Harris</span>
+          </div>
+        </div>
+      </nav>
+
+      <div class="dash-body">
+        <!-- Sidebar -->
+        <aside class="dash-sidebar">
+          <div class="sidebar-item active">🏠 &nbsp;Home</div>
+          <div class="sidebar-item">📚 &nbsp;My Class</div>
+          <div class="sidebar-item">📈 &nbsp;Statistics</div>
+          <div class="sidebar-item">⚙️ &nbsp;Settings</div>
+        </aside>
+
+        <!-- Main -->
+        <main class="dash-main">
+          <div class="dash-greeting">Good morning, Ms. Harris 👋</div>
+
+          <!-- KPIs -->
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <div class="kpi-icon">📊</div>
+              <div class="kpi-label">Attendance</div>
+              <div class="kpi-value">94%</div>
+              <div class="kpi-trend">↑ +2% this week</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon">🎓</div>
+              <div class="kpi-label">Avg. Progress</div>
+              <div class="kpi-value">78%</div>
+              <div class="kpi-trend">↑ +5% this month</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon">⚡</div>
+              <div class="kpi-label">Engagement</div>
+              <div class="kpi-value" style="font-size:1.4rem;">High</div>
+              <div class="kpi-trend" style="color:#64748b;">→ Stable</div>
+            </div>
+          </div>
+
+          <!-- Class List -->
+          <div class="section-head">
+            <h3>Class List</h3>
+            <button class="btn-sm">+ Add Student</button>
+          </div>
+          <table class="class-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Current Lesson</th>
+                <th>Progress</th>
+                <th>Last Active</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="student-name"><div class="stu-avatar">AB</div> Alex B.</div></td>
+                <td>Lesson 4 – Phrases</td>
+                <td><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div><span style="font-size:.8rem;color:#64748b;">40%</span></div></td>
+                <td style="font-size:.8rem;color:#64748b;">Today</td>
+              </tr>
+              <tr>
+                <td><div class="student-name"><div class="stu-avatar" style="background:#bfdbfe;color:#1d4ed8;">ST</div> Sam T.</div></td>
+                <td>Lesson 7 – Stories</td>
+                <td><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div><span style="font-size:.8rem;color:#64748b;">70%</span></div></td>
+                <td style="font-size:.8rem;color:#64748b;">Yesterday</td>
+              </tr>
+              <tr>
+                <td><div class="student-name"><div class="stu-avatar" style="background:#fce7f3;color:#9d174d;">JM</div> Jordan M.</div></td>
+                <td>Lesson 2 – Sounds</td>
+                <td><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div><span style="font-size:.8rem;color:#64748b;">20%</span></div></td>
+                <td style="font-size:.8rem;color:#64748b;">3 days ago</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Upcoming Sessions -->
+          <div class="section-head">
+            <h3>Upcoming Sessions</h3>
+          </div>
+          <div class="session-list">
+            <div class="session-item">
+              <span class="session-time">Mon 10:00</span>
+              <span class="session-title">Group A – Social Skills</span>
+              <span class="badge badge-group">Group</span>
+            </div>
+            <div class="session-item">
+              <span class="session-time">Tue 14:00</span>
+              <span class="session-title">1:1 – Alex B. (Speech &amp; Language)</span>
+              <span class="badge badge-1on1">1:1</span>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN 2: Student Learning Path  (mobile)
+  ══════════════════════════════════════════════════════════════ -->
+  <div id="student-path" class="screen">
+    <div class="screen-meta">
+      <span class="screen-title">Student Learning Path</span>
+      <span class="screen-sub">Mobile · 375×812 · Draftboard + WireMD</span>
+    </div>
+    <div class="mobile-shell">
+      <!-- Top bar -->
+      <div class="mobile-topbar">
+        <span class="back">← Back</span>
+        <span>iLEARN</span>
+        <span>🔔</span>
+      </div>
+
+      <div class="mobile-body">
+        <div class="mob-greeting">Hi, Alex! 👋</div>
+        <div class="mob-sub">Keep going – you're doing great!</div>
+
+        <!-- Overall progress -->
+        <div class="overall-progress">
+          <div class="prog-label">Overall Progress</div>
+          <div class="big-bar"><div class="big-fill"></div></div>
+          <div class="prog-count">6 of 10 lessons completed · 60%</div>
+        </div>
+
+        <!-- Lesson list -->
+        <div class="path-heading">Your Learning Path</div>
+        <ul class="lesson-list">
+          <li class="lesson-item completed"><span class="lesson-icon">✅</span> Lesson 1 – Introduction</li>
+          <li class="lesson-item completed"><span class="lesson-icon">✅</span> Lesson 2 – Sounds</li>
+          <li class="lesson-item completed"><span class="lesson-icon">✅</span> Lesson 3 – Words</li>
+          <li class="lesson-item current"><span class="lesson-icon">▶️</span> Lesson 4 – Phrases</li>
+          <li class="lesson-item locked"><span class="lesson-icon">🔒</span> Lesson 5 – Sentences</li>
+          <li class="lesson-item locked"><span class="lesson-icon">🔒</span> Lesson 6 – Stories</li>
+        </ul>
+
+        <button class="cta-btn">Start Lesson 4</button>
+
+        <!-- Badge -->
+        <div class="badge-section">
+          <h4>🏅 Latest Badge</h4>
+          <div class="badge-card">
+            <span class="badge-icon">🌟</span>
+            <div>
+              <div class="badge-name">Word Explorer</div>
+              <div class="badge-date">Earned yesterday</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN 3: Student Progress Report
+  ══════════════════════════════════════════════════════════════ -->
+  <div id="progress-report" class="screen">
+    <div class="screen-meta">
+      <span class="screen-title">Student Progress Report</span>
+      <span class="screen-sub">Desktop · 1440×900 · Draftboard + WireMD</span>
+    </div>
+    <div class="report-frame">
+
+      <!-- Top bar -->
+      <div class="report-topbar">
+        <div class="breadcrumb">
+          iLEARN <span class="sep">›</span> Class <span class="sep">›</span> <span class="current">Alex B.</span>
+        </div>
+        <div class="report-actions">
+          <button class="btn-export">Export PDF</button>
+          <button class="btn-export" style="border-color:#e2e8f0;color:#64748b;">⚙️</button>
+        </div>
+      </div>
+
+      <div class="report-body">
+        <!-- Sidebar -->
+        <aside class="report-sidebar">
+          <div class="time-tab active">Overview</div>
+          <div class="time-tab">Weekly</div>
+          <div class="time-tab">Monthly</div>
+          <div class="time-tab">All Time</div>
+        </aside>
+
+        <!-- Main -->
+        <div class="report-main">
+
+          <!-- Student header -->
+          <div class="student-header">
+            <div class="big-avatar">AB</div>
+            <div class="stu-info">
+              <h2>Alex B.</h2>
+              <div class="stu-meta">
+                <span>Age: 9</span>
+                <span>Speech &amp; Language</span>
+                <span>Ms. Harris</span>
+                <span>Started Jan 2026</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KPIs -->
+          <div class="kpi-row" style="margin-bottom:24px;">
+            <div class="kpi-card">
+              <div class="kpi-label">Lessons Completed</div>
+              <div class="kpi-value">4<span style="font-size:1rem;font-weight:400;color:#94a3b8;"> / 10</span></div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Total Sessions</div>
+              <div class="kpi-value">12</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Average Score</div>
+              <div class="kpi-value">82%</div>
+              <div class="kpi-trend">↑ Improving</div>
+            </div>
+          </div>
+
+          <!-- Chart -->
+          <div class="chart-section">
+            <h3>Progress Over Time</h3>
+            <div class="chart-area">
+              <svg class="chart-svg" viewBox="0 0 600 140" xmlns="http://www.w3.org/2000/svg">
+                <!-- Grid lines -->
+                <line x1="40" y1="10"  x2="580" y2="10"  stroke="#e2e8f0" stroke-width="1"/>
+                <line x1="40" y1="45"  x2="580" y2="45"  stroke="#e2e8f0" stroke-width="1"/>
+                <line x1="40" y1="80"  x2="580" y2="80"  stroke="#e2e8f0" stroke-width="1"/>
+                <line x1="40" y1="115" x2="580" y2="115" stroke="#e2e8f0" stroke-width="1"/>
+                <!-- Y labels -->
+                <text x="28" y="14"  font-size="11" fill="#94a3b8" text-anchor="end">100</text>
+                <text x="28" y="49"  font-size="11" fill="#94a3b8" text-anchor="end">75</text>
+                <text x="28" y="84"  font-size="11" fill="#94a3b8" text-anchor="end">50</text>
+                <text x="28" y="119" font-size="11" fill="#94a3b8" text-anchor="end">25</text>
+                <!-- Area fill -->
+                <polygon
+                  points="
+                    40,115
+                    40,83  108,76  176,70  244,58  312,47  380,38
+                    380,115
+                  "
+                  fill="#eef2ff" opacity="0.7"/>
+                <!-- Line -->
+                <polyline
+                  points="40,83  108,76  176,70  244,58  312,47  380,38"
+                  fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                <!-- Dots -->
+                <circle cx="40"  cy="83" r="4" fill="#4f46e5"/>
+                <circle cx="108" cy="76" r="4" fill="#4f46e5"/>
+                <circle cx="176" cy="70" r="4" fill="#4f46e5"/>
+                <circle cx="244" cy="58" r="4" fill="#4f46e5"/>
+                <circle cx="312" cy="47" r="4" fill="#4f46e5"/>
+                <circle cx="380" cy="38" r="5" fill="#4f46e5" stroke="#fff" stroke-width="2"/>
+                <!-- X labels -->
+                <text x="40"  y="132" font-size="11" fill="#94a3b8" text-anchor="middle">Jan</text>
+                <text x="108" y="132" font-size="11" fill="#94a3b8" text-anchor="middle">Feb</text>
+                <text x="176" y="132" font-size="11" fill="#94a3b8" text-anchor="middle">Mar</text>
+                <text x="244" y="132" font-size="11" fill="#94a3b8" text-anchor="middle">Apr</text>
+                <text x="312" y="132" font-size="11" fill="#94a3b8" text-anchor="middle">May</text>
+                <text x="380" y="132" font-size="11" fill="#94a3b8" text-anchor="middle">Jun</text>
+                <!-- Score labels -->
+                <text x="40"  y="77" font-size="10" fill="#4f46e5" text-anchor="middle">55</text>
+                <text x="108" y="70" font-size="10" fill="#4f46e5" text-anchor="middle">60</text>
+                <text x="176" y="64" font-size="10" fill="#4f46e5" text-anchor="middle">65</text>
+                <text x="244" y="52" font-size="10" fill="#4f46e5" text-anchor="middle">72</text>
+                <text x="312" y="41" font-size="10" fill="#4f46e5" text-anchor="middle">78</text>
+                <text x="380" y="32" font-size="10" fill="#4f46e5" text-anchor="middle" font-weight="700">82</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Session Notes -->
+          <div class="notes-section">
+            <h3>Session Notes</h3>
+            <div class="note-item">
+              <span class="note-date">22 Aug</span>
+              <span class="note-text">Good focus, completed Lesson 4 independently.</span>
+            </div>
+            <div class="note-item">
+              <span class="note-date">15 Aug</span>
+              <span class="note-text">Struggled with consonant blends – revisit next session.</span>
+            </div>
+            <button class="add-note-btn">＋ Add Note</button>
+          </div>
+
+        </div><!-- /report-main -->
+      </div><!-- /report-body -->
+    </div><!-- /report-frame -->
+  </div>
+
+</div><!-- /screens -->
+
+<script>
+  function showScreen(id, tab) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    tab.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
