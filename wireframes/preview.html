@@ -3,498 +3,835 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>iLEARN Wireframe Preview</title>
+  <title>iLEARN — Design Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* ─── Reset & Base ─────────────────────────────────────────── */
+    :root {
+      --brand:       #5b50f0;
+      --brand-dark:  #4338ca;
+      --brand-light: #ede9fe;
+      --brand-glow:  rgba(91,80,240,.18);
+      --surface:     #ffffff;
+      --surface-2:   #f8f9fc;
+      --surface-3:   #f1f3f9;
+      --border:      #e4e7ef;
+      --border-soft: #eef0f6;
+      --text-1:      #0f1117;
+      --text-2:      #4b5068;
+      --text-3:      #8b92a8;
+      --green:       #10b981;
+      --green-bg:    #ecfdf5;
+      --green-border:#a7f3d0;
+      --amber:       #f59e0b;
+      --amber-bg:    #fffbeb;
+      --red:         #ef4444;
+      --radius-sm:   8px;
+      --radius-md:   12px;
+      --radius-lg:   16px;
+      --radius-xl:   24px;
+      --shadow-sm:   0 1px 3px rgba(15,17,23,.06), 0 1px 2px rgba(15,17,23,.04);
+      --shadow-md:   0 4px 16px rgba(15,17,23,.08), 0 1px 4px rgba(15,17,23,.04);
+      --shadow-lg:   0 12px 40px rgba(15,17,23,.12), 0 4px 12px rgba(15,17,23,.06);
+      --shadow-brand:0 8px 32px rgba(91,80,240,.22);
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f1f5f9;
-      color: #1e293b;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f0f2f8;
+      color: var(--text-1);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
     }
 
-    /* ─── Page shell ────────────────────────────────────────────── */
-    .page-header {
-      background: #4f46e5;
-      color: #fff;
-      padding: 18px 32px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .page-header h1 { font-size: 1.25rem; font-weight: 700; }
-    .page-header span { font-size: 0.85rem; opacity: .75; }
-
-    .tabs {
-      display: flex;
-      gap: 4px;
-      padding: 20px 32px 0;
-      border-bottom: 2px solid #e2e8f0;
-      background: #f1f5f9;
-    }
-    .tab {
-      padding: 10px 20px;
-      border-radius: 8px 8px 0 0;
-      border: 2px solid transparent;
-      background: #e2e8f0;
-      cursor: pointer;
-      font-size: .875rem;
-      font-weight: 500;
-      color: #64748b;
-      transition: all .15s;
-    }
-    .tab.active {
-      background: #fff;
-      border-color: #e2e8f0;
-      border-bottom-color: #fff;
-      color: #4f46e5;
-      font-weight: 600;
-    }
-    .tab:hover:not(.active) { background: #cbd5e1; }
-
-    .screens { padding: 0 32px 48px; }
-    .screen { display: none; padding-top: 28px; }
-    .screen.active { display: block; }
-
-    /* ─── Shared components ─────────────────────────────────────── */
-    .badge {
-      display: inline-block;
-      padding: 2px 9px;
-      border-radius: 999px;
-      font-size: .72rem;
-      font-weight: 600;
-    }
-    .badge-group  { background: #dbeafe; color: #1d4ed8; }
-    .badge-1on1   { background: #fce7f3; color: #9d174d; }
-    .badge-primary { background: #ede9fe; color: #4f46e5; }
-
-    /* ─── SCREEN 1: Teacher Dashboard ───────────────────────────── */
-    .dash-frame {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0,0,0,.08);
-      overflow: hidden;
-      max-width: 1100px;
-    }
-
-    /* Top nav */
-    .dash-nav {
+    /* ── Outer shell ──────────────────────────────────────────────── */
+    .shell-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #4f46e5;
-      color: #fff;
-      padding: 14px 24px;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
     }
-    .dash-nav .brand { font-weight: 800; font-size: 1.1rem; letter-spacing: -.5px; }
-    .dash-nav .nav-right { display: flex; align-items: center; gap: 16px; font-size: .85rem; }
-    .icon-btn {
-      background: rgba(255,255,255,.2);
-      border: none;
-      border-radius: 8px;
-      padding: 6px 10px;
-      color: #fff;
-      cursor: pointer;
-      font-size: .85rem;
-    }
-    .avatar {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: #818cf8;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: .8rem; color: #fff;
-    }
-
-    /* Body layout */
-    .dash-body { display: flex; min-height: 560px; }
-
-    .dash-sidebar {
-      width: 200px;
-      background: #f8fafc;
-      border-right: 1px solid #e2e8f0;
-      padding: 24px 0;
-      flex-shrink: 0;
-    }
-    .sidebar-item {
+    .shell-logo {
       display: flex; align-items: center; gap: 10px;
-      padding: 10px 20px;
-      font-size: .875rem;
-      color: #64748b;
-      cursor: pointer;
-      transition: background .1s;
+      font-weight: 800; font-size: 1.05rem; color: var(--text-1);
+      letter-spacing: -.03em;
     }
-    .sidebar-item:hover { background: #f1f5f9; }
-    .sidebar-item.active {
-      background: #ede9fe;
-      color: #4f46e5;
+    .logo-mark {
+      width: 30px; height: 30px; border-radius: 9px;
+      background: linear-gradient(135deg, var(--brand) 0%, #818cf8 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; font-weight: 900; color: #fff;
+      box-shadow: var(--shadow-brand);
+    }
+    .shell-pill {
+      background: var(--brand-light); color: var(--brand);
+      font-size: .7rem; font-weight: 700; padding: 3px 9px;
+      border-radius: 999px; letter-spacing: .04em; text-transform: uppercase;
+    }
+    .shell-tabs {
+      display: flex; gap: 2px;
+    }
+    .shell-tab {
+      padding: 8px 18px; border-radius: var(--radius-md);
+      font-size: .82rem; font-weight: 500;
+      color: var(--text-3); cursor: pointer;
+      border: none; background: none;
+      transition: all .18s ease;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .shell-tab:hover { color: var(--text-2); background: var(--surface-3); }
+    .shell-tab.active {
+      color: var(--brand); background: var(--brand-light);
       font-weight: 600;
-      border-right: 3px solid #4f46e5;
+    }
+    .shell-tab .tab-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: currentColor; opacity: .5;
+    }
+    .shell-tab.active .tab-dot { opacity: 1; }
+
+    /* ── Screen container ─────────────────────────────────────────── */
+    .screens { padding: 32px 40px 60px; max-width: 1300px; margin: 0 auto; }
+    .screen { display: none; animation: fadeIn .22s ease; }
+    .screen.active { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+    .screen-label {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+    }
+    .screen-label h2 { font-size: 1rem; font-weight: 700; letter-spacing: -.02em; }
+    .screen-label .sl-meta { font-size: .78rem; color: var(--text-3); font-weight: 500; }
+    .screen-label .sl-badge {
+      font-size: .68rem; font-weight: 700; padding: 2px 8px; border-radius: 999px;
+      background: var(--surface-3); color: var(--text-2); text-transform: uppercase; letter-spacing: .05em;
     }
 
-    .dash-main { flex: 1; padding: 28px 28px 32px; overflow-x: auto; }
-    .dash-greeting { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; }
-
-    /* KPI cards */
-    .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
-    .kpi-card {
-      border: 1.5px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 18px 20px;
-      background: #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    /* ══════════════════════════════════════════════════
+       SHARED PRIMITIVES
+    ══════════════════════════════════════════════════ */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
     }
-    .kpi-card .kpi-icon { font-size: 1.4rem; margin-bottom: 8px; }
-    .kpi-card .kpi-label { font-size: .78rem; color: #64748b; text-transform: uppercase; letter-spacing: .04em; }
-    .kpi-card .kpi-value { font-size: 1.8rem; font-weight: 800; color: #1e293b; line-height: 1.1; }
-    .kpi-card .kpi-trend { font-size: .78rem; color: #22c55e; margin-top: 4px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 16px; border-radius: var(--radius-sm);
+      font-size: .82rem; font-weight: 600;
+      cursor: pointer; border: none; transition: all .15s ease;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--brand); color: #fff;
+      box-shadow: 0 2px 8px var(--brand-glow);
+    }
+    .btn-primary:hover { background: var(--brand-dark); box-shadow: var(--shadow-brand); transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--surface); color: var(--text-2);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--brand); color: var(--brand); }
+    .btn-ghost { background: none; color: var(--text-3); }
+    .btn-ghost:hover { background: var(--surface-3); color: var(--text-2); }
 
-    /* Section heading */
-    .section-head {
+    .pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 999px;
+      font-size: .72rem; font-weight: 600; letter-spacing: .02em;
+    }
+    .pill-blue   { background: #dbeafe; color: #1d4ed8; }
+    .pill-purple { background: var(--brand-light); color: var(--brand); }
+    .pill-green  { background: var(--green-bg); color: #065f46; }
+    .pill-amber  { background: var(--amber-bg); color: #92400e; }
+    .pill-slate  { background: var(--surface-3); color: var(--text-2); }
+
+    .progress-bar-wrap {
+      height: 6px; background: var(--surface-3); border-radius: 999px; overflow: hidden;
+    }
+    .progress-bar-fill { height: 100%; background: var(--brand); border-radius: 999px; transition: width .4s ease; }
+
+    .avatar-stack { display: flex; }
+    .av {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700;
+      border: 2px solid var(--surface);
+      margin-left: -8px;
+    }
+    .av:first-child { margin-left: 0; }
+
+    /* ══════════════════════════════════════════════════
+       SCREEN 1 — TEACHER DASHBOARD
+    ══════════════════════════════════════════════════ */
+    .dash-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    /* App nav */
+    .app-nav {
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 12px;
+      padding: 0 28px;
+      height: 58px;
+      border-bottom: 1px solid var(--border-soft);
+      background: var(--surface);
     }
-    .section-head h3 { font-size: 1rem; font-weight: 700; }
-    .btn-sm {
-      background: #fff;
-      border: 1.5px solid #4f46e5;
-      color: #4f46e5;
-      border-radius: 8px;
-      padding: 5px 12px;
-      font-size: .78rem;
-      font-weight: 600;
-      cursor: pointer;
+    .app-nav-left { display: flex; align-items: center; gap: 32px; }
+    .app-brand {
+      display: flex; align-items: center; gap: 9px;
+      font-weight: 800; font-size: .95rem; letter-spacing: -.03em;
     }
-    .btn-sm:hover { background: #ede9fe; }
+    .app-brand-mark {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: linear-gradient(135deg, #5b50f0, #818cf8);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 900; color: #fff;
+    }
+    .nav-links { display: flex; gap: 2px; }
+    .nav-link {
+      padding: 6px 14px; border-radius: var(--radius-sm);
+      font-size: .82rem; font-weight: 500; color: var(--text-3);
+      cursor: pointer; transition: all .15s;
+    }
+    .nav-link:hover { background: var(--surface-3); color: var(--text-2); }
+    .nav-link.active { color: var(--brand); background: var(--brand-light); font-weight: 600; }
+    .app-nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-icon-btn {
+      width: 34px; height: 34px; border-radius: var(--radius-sm);
+      background: var(--surface-2); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; cursor: pointer;
+      transition: all .15s;
+    }
+    .nav-icon-btn:hover { border-color: var(--brand); background: var(--brand-light); }
+    .nav-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, #a78bfa, #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700; color: #fff;
+      cursor: pointer; border: 2px solid var(--brand-light);
+    }
+
+    /* Layout */
+    .dash-layout { display: flex; }
+    .dash-sidebar {
+      width: 220px; flex-shrink: 0;
+      border-right: 1px solid var(--border-soft);
+      padding: 20px 12px;
+      background: var(--surface);
+      min-height: 620px;
+    }
+    .sidebar-section-label {
+      font-size: .65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--text-3);
+      padding: 0 10px 8px;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px; border-radius: var(--radius-sm);
+      font-size: .83rem; font-weight: 500; color: var(--text-2);
+      cursor: pointer; margin-bottom: 1px;
+      transition: all .15s;
+    }
+    .sidebar-link:hover { background: var(--surface-3); color: var(--text-1); }
+    .sidebar-link.active {
+      background: var(--brand-light); color: var(--brand); font-weight: 600;
+    }
+    .sidebar-link .sl-icon { font-size: 1rem; width: 20px; text-align: center; }
+    .sidebar-link .sl-count {
+      margin-left: auto; font-size: .7rem; font-weight: 700;
+      background: var(--brand); color: #fff;
+      border-radius: 999px; padding: 1px 7px;
+    }
+    .sidebar-divider { height: 1px; background: var(--border-soft); margin: 14px 10px; }
+
+    /* Main content */
+    .dash-main { flex: 1; padding: 28px 32px; overflow: hidden; }
+    .dash-header { margin-bottom: 24px; }
+    .dash-header h1 {
+      font-size: 1.35rem; font-weight: 800; letter-spacing: -.03em;
+      margin-bottom: 4px;
+    }
+    .dash-header p { font-size: .83rem; color: var(--text-3); }
+
+    /* KPI grid */
+    .kpi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 28px; }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+      position: relative; overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .kpi-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .kpi-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+    .kpi-card.k1::before { background: linear-gradient(90deg, #5b50f0, #818cf8); }
+    .kpi-card.k2::before { background: linear-gradient(90deg, #10b981, #34d399); }
+    .kpi-card.k3::before { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
+    .kpi-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
+    .kpi-icon-wrap {
+      width: 38px; height: 38px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .kpi-icon-wrap.ki1 { background: var(--brand-light); }
+    .kpi-icon-wrap.ki2 { background: var(--green-bg); }
+    .kpi-icon-wrap.ki3 { background: var(--amber-bg); }
+    .kpi-trend-chip {
+      font-size: .7rem; font-weight: 700; padding: 3px 8px;
+      border-radius: 999px;
+    }
+    .kpi-trend-chip.up   { background: var(--green-bg); color: #065f46; }
+    .kpi-trend-chip.flat { background: var(--surface-3); color: var(--text-2); }
+    .kpi-value {
+      font-size: 2rem; font-weight: 800; letter-spacing: -.04em;
+      line-height: 1; margin-bottom: 4px;
+    }
+    .kpi-label { font-size: .78rem; font-weight: 500; color: var(--text-3); }
+
+    /* Two-column layout */
+    .dash-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
 
     /* Class table */
-    .class-table { width: 100%; border-collapse: collapse; font-size: .875rem; margin-bottom: 28px; }
-    .class-table th {
-      text-align: left;
-      padding: 8px 12px;
-      font-size: .75rem;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      color: #94a3b8;
-      border-bottom: 1.5px solid #e2e8f0;
-    }
-    .class-table td { padding: 12px 12px; border-bottom: 1px solid #f1f5f9; }
-    .class-table tr:last-child td { border-bottom: none; }
-    .student-name { display: flex; align-items: center; gap: 8px; font-weight: 600; }
-    .stu-avatar {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: #c7d2fe;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .72rem; font-weight: 700; color: #4f46e5;
-    }
-    .progress-wrap { display: flex; align-items: center; gap: 8px; }
-    .progress-bar {
-      flex: 1; height: 7px; background: #e2e8f0; border-radius: 999px; overflow: hidden;
-      min-width: 80px;
-    }
-    .progress-fill { height: 100%; background: #4f46e5; border-radius: 999px; }
-
-    /* Sessions */
-    .session-list { display: flex; flex-direction: column; gap: 10px; }
-    .session-item {
-      display: flex; align-items: center; gap: 14px;
-      padding: 12px 16px;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 10px;
-      background: #fafafe;
-    }
-    .session-time { font-size: .78rem; font-weight: 700; color: #64748b; min-width: 70px; }
-    .session-title { font-size: .875rem; font-weight: 600; flex: 1; }
-
-    /* ─── SCREEN 2: Student Learning Path ───────────────────────── */
-    .mobile-shell {
-      width: 375px;
-      min-height: 812px;
-      background: #fff;
-      border-radius: 40px;
-      box-shadow: 0 8px 40px rgba(0,0,0,.14);
-      overflow: hidden;
-      margin: 0 auto;
-      border: 8px solid #1e293b;
-      position: relative;
-    }
-    .mobile-topbar {
-      background: #4f46e5;
-      color: #fff;
+    .section-hdr {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px;
-      font-weight: 700;
+      margin-bottom: 14px;
     }
-    .mobile-topbar .back { font-size: 1.1rem; cursor: pointer; }
-    .mobile-body { padding: 20px; }
-    .mob-greeting { font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
-    .mob-sub { font-size: .85rem; color: #64748b; margin-bottom: 18px; }
+    .section-hdr h3 { font-size: .9rem; font-weight: 700; letter-spacing: -.02em; }
+    .section-hdr .hdr-right { display: flex; gap: 8px; align-items: center; }
+    .search-input {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 6px 12px;
+      font-size: .78rem; color: var(--text-3);
+    }
 
-    .overall-progress { margin-bottom: 24px; }
-    .overall-progress .prog-label { font-size: .8rem; color: #64748b; margin-bottom: 6px; font-weight: 600; }
-    .big-bar { height: 12px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-bottom: 4px; }
-    .big-fill { height: 100%; background: #4f46e5; border-radius: 999px; width: 60%; }
-    .prog-count { font-size: .78rem; color: #94a3b8; }
+    .student-table { width: 100%; border-collapse: collapse; }
+    .student-table th {
+      text-align: left; padding: 8px 12px;
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--text-3);
+      border-bottom: 1px solid var(--border);
+    }
+    .student-table td {
+      padding: 13px 12px; border-bottom: 1px solid var(--border-soft);
+      font-size: .83rem; vertical-align: middle;
+    }
+    .student-table tr:last-child td { border-bottom: none; }
+    .student-table tbody tr { transition: background .12s; cursor: pointer; }
+    .student-table tbody tr:hover td { background: var(--surface-2); }
 
-    .path-heading { font-size: .95rem; font-weight: 700; margin-bottom: 12px; }
-    .lesson-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .stu-cell { display: flex; align-items: center; gap: 10px; }
+    .stu-av {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700; flex-shrink: 0;
+    }
+    .stu-name { font-weight: 600; font-size: .83rem; margin-bottom: 1px; }
+    .stu-prog { font-size: .72rem; color: var(--text-3); }
+    .prog-cell { display: flex; align-items: center; gap: 10px; }
+    .prog-bar-sm { flex: 1; height: 5px; background: var(--surface-3); border-radius: 999px; overflow: hidden; min-width: 70px; }
+    .prog-fill-sm { height: 100%; border-radius: 999px; background: var(--brand); }
+    .prog-pct { font-size: .75rem; font-weight: 700; color: var(--text-2); min-width: 28px; text-align: right; }
+
+    /* Sessions panel */
+    .sessions-panel {}
+    .session-card {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 9px;
+      background: var(--surface);
+      transition: all .15s; cursor: pointer;
+    }
+    .session-card:hover { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-glow); }
+    .sess-time-block {
+      display: flex; flex-direction: column; align-items: center;
+      min-width: 44px;
+      background: var(--brand-light); border-radius: var(--radius-sm);
+      padding: 7px 6px;
+    }
+    .sess-day { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--brand); }
+    .sess-hour { font-size: .82rem; font-weight: 800; color: var(--brand); letter-spacing: -.02em; }
+    .sess-info { flex: 1; }
+    .sess-title { font-size: .83rem; font-weight: 600; margin-bottom: 5px; }
+    .sess-meta { display: flex; gap: 6px; align-items: center; }
+
+    /* ══════════════════════════════════════════════════
+       SCREEN 2 — STUDENT LEARNING PATH (mobile)
+    ══════════════════════════════════════════════════ */
+    .mobile-preview {
+      display: flex; gap: 32px; align-items: flex-start; justify-content: center;
+    }
+    .phone-shell {
+      width: 390px; background: var(--surface);
+      border-radius: 44px;
+      box-shadow: 0 24px 80px rgba(15,17,23,.18), 0 0 0 10px #1e2030;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .phone-status {
+      background: #0f1117; color: #fff;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 28px 10px;
+      font-size: .7rem; font-weight: 600;
+    }
+    .status-island {
+      width: 100px; height: 26px; background: #0f1117;
+      border-radius: 999px; position: absolute; left: 50%; transform: translateX(-50%);
+    }
+
+    .mob-header {
+      background: linear-gradient(135deg, #5b50f0 0%, #7c6ff7 100%);
+      padding: 20px 24px 28px;
+      color: #fff;
+      position: relative; overflow: hidden;
+    }
+    .mob-header::after {
+      content: '';
+      position: absolute; bottom: -24px; left: 0; right: 0; height: 48px;
+      background: var(--surface); border-radius: 50% 50% 0 0;
+    }
+    .mob-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .mob-back { opacity: .8; font-size: .85rem; cursor: pointer; }
+    .mob-brand { font-weight: 800; font-size: .95rem; letter-spacing: -.02em; }
+    .mob-notif { opacity: .8; }
+    .mob-greeting { font-size: 1.3rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: 4px; }
+    .mob-sub { font-size: .82rem; opacity: .8; }
+
+    .mob-body { padding: 12px 20px 28px; }
+
+    .overall-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 16px 18px;
+      margin-bottom: 20px; box-shadow: var(--shadow-sm);
+    }
+    .ov-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .ov-label { font-size: .8rem; font-weight: 700; }
+    .ov-pct { font-size: 1.1rem; font-weight: 800; color: var(--brand); }
+    .ov-sub { font-size: .72rem; color: var(--text-3); margin-top: 6px; }
+
+    .lessons-heading {
+      font-size: .78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--text-3); margin-bottom: 10px;
+    }
+    .lesson-list { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 22px; }
     .lesson-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: .875rem;
-      font-weight: 500;
-      border: 1.5px solid #e2e8f0;
+      display: flex; align-items: center; gap: 11px;
+      padding: 12px 14px; border-radius: var(--radius-md);
+      font-size: .83rem; font-weight: 500;
+      border: 1.5px solid var(--border);
+      transition: all .15s; cursor: pointer;
+      background: var(--surface);
     }
-    .lesson-item.completed { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
-    .lesson-item.current   { background: #eef2ff; border-color: #a5b4fc; color: #3730a3; font-weight: 700; }
-    .lesson-item.locked    { background: #f8fafc; border-color: #e2e8f0; color: #94a3b8; }
-    .lesson-icon { font-size: 1rem; flex-shrink: 0; }
+    .lesson-item.done { background: var(--green-bg); border-color: var(--green-border); color: #065f46; }
+    .lesson-item.now  { background: var(--brand-light); border-color: #a5b4fc; color: #3730a3; font-weight: 700; box-shadow: 0 0 0 3px var(--brand-glow); }
+    .lesson-item.lock { opacity: .55; }
+    .li-icon { font-size: .95rem; flex-shrink: 0; }
+    .li-text { flex: 1; }
+    .li-tag { font-size: .68rem; font-weight: 700; color: var(--brand); background: var(--brand-light); padding: 2px 8px; border-radius: 999px; }
 
     .cta-btn {
-      display: block; width: 100%;
-      background: #4f46e5; color: #fff;
-      border: none; border-radius: 12px;
-      padding: 14px;
-      font-size: 1rem; font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-      margin-bottom: 24px;
-      transition: background .15s;
+      display: block; width: 100%; padding: 15px;
+      background: linear-gradient(135deg, #5b50f0, #7c6ff7);
+      color: #fff; border: none; border-radius: var(--radius-md);
+      font-size: .95rem; font-weight: 700; cursor: pointer;
+      font-family: inherit; letter-spacing: -.01em;
+      box-shadow: 0 4px 16px var(--brand-glow);
+      transition: all .18s;
+      margin-bottom: 20px;
     }
-    .cta-btn:hover { background: #4338ca; }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-brand); }
 
-    .badge-section h4 { font-size: .9rem; font-weight: 700; margin-bottom: 10px; }
     .badge-card {
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px;
+      display: flex; align-items: center; gap: 13px;
+      background: var(--amber-bg);
       border: 1.5px solid #fde68a;
-      border-radius: 12px;
-      background: #fffbeb;
+      border-radius: var(--radius-md); padding: 13px 15px;
     }
-    .badge-icon { font-size: 1.8rem; }
-    .badge-card .badge-name { font-weight: 700; font-size: .9rem; }
-    .badge-card .badge-date { font-size: .78rem; color: #92400e; }
+    .badge-icon-wrap {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 12px rgba(245,158,11,.3);
+    }
+    .badge-title { font-size: .85rem; font-weight: 700; color: #78350f; margin-bottom: 2px; }
+    .badge-sub { font-size: .72rem; color: #92400e; }
 
-    /* ─── SCREEN 3: Progress Report ────────────────────────────── */
-    .report-frame {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    /* ══════════════════════════════════════════════════
+       SCREEN 3 — PROGRESS REPORT
+    ══════════════════════════════════════════════════ */
+    .report-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
       overflow: hidden;
-      max-width: 1100px;
     }
+
     .report-topbar {
       display: flex; align-items: center; justify-content: space-between;
       padding: 14px 28px;
-      background: #f8fafc;
-      border-bottom: 1.5px solid #e2e8f0;
-      font-size: .85rem;
+      border-bottom: 1px solid var(--border-soft);
+      background: var(--surface-2);
     }
-    .breadcrumb { display: flex; align-items: center; gap: 6px; color: #64748b; }
-    .breadcrumb .sep { color: #cbd5e1; }
-    .breadcrumb .current { color: #1e293b; font-weight: 600; }
-    .report-actions { display: flex; gap: 10px; }
-    .btn-export {
-      background: #fff; border: 1.5px solid #4f46e5; color: #4f46e5;
-      border-radius: 8px; padding: 6px 14px; font-size: .8rem; font-weight: 600; cursor: pointer;
-    }
-    .btn-export:hover { background: #ede9fe; }
+    .breadcrumb { display: flex; align-items: center; gap: 7px; font-size: .82rem; }
+    .bc-item { color: var(--text-3); cursor: pointer; transition: color .15s; }
+    .bc-item:hover { color: var(--brand); }
+    .bc-sep { color: var(--border); }
+    .bc-current { color: var(--text-1); font-weight: 600; }
+    .tb-actions { display: flex; gap: 9px; }
 
-    .report-body { display: flex; }
+    .report-layout { display: flex; min-height: 620px; }
     .report-sidebar {
-      width: 180px; background: #f8fafc;
-      border-right: 1px solid #e2e8f0;
+      width: 180px; flex-shrink: 0;
+      border-right: 1px solid var(--border-soft);
       padding: 24px 0;
-      flex-shrink: 0;
+      background: var(--surface);
     }
-    .time-tab {
-      padding: 10px 20px;
-      font-size: .85rem; font-weight: 500; color: #64748b;
-      cursor: pointer;
+    .rs-label {
+      font-size: .65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--text-3); padding: 0 18px 8px;
     }
-    .time-tab.active { color: #4f46e5; font-weight: 700; background: #ede9fe; border-right: 3px solid #4f46e5; }
-    .time-tab:hover:not(.active) { background: #f1f5f9; }
+    .rs-tab {
+      padding: 9px 18px; font-size: .83rem; font-weight: 500; color: var(--text-3);
+      cursor: pointer; transition: all .15s;
+      border-right: 2.5px solid transparent;
+    }
+    .rs-tab:hover { background: var(--surface-3); color: var(--text-2); }
+    .rs-tab.active { color: var(--brand); font-weight: 700; background: var(--brand-light); border-right-color: var(--brand); }
 
-    .report-main { flex: 1; padding: 24px 28px; }
+    .report-main { flex: 1; padding: 28px 32px; overflow: hidden; }
 
-    .student-header {
-      display: flex; align-items: center; gap: 16px;
-      padding-bottom: 20px; border-bottom: 1.5px solid #e2e8f0; margin-bottom: 24px;
+    /* Student hero */
+    .stu-hero {
+      display: flex; align-items: center; gap: 18px;
+      padding-bottom: 24px; border-bottom: 1px solid var(--border-soft); margin-bottom: 24px;
     }
-    .big-avatar {
-      width: 52px; height: 52px; border-radius: 50%;
-      background: #c7d2fe;
+    .big-av {
+      width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, #a78bfa, #7c3aed);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; font-weight: 800; color: #4f46e5;
+      font-size: 1.15rem; font-weight: 800; color: #fff;
+      box-shadow: 0 4px 16px rgba(124,58,237,.3);
     }
-    .stu-info h2 { font-size: 1.15rem; font-weight: 800; }
-    .stu-meta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
-    .stu-meta span { font-size: .78rem; color: #64748b; background: #f1f5f9; border-radius: 6px; padding: 2px 8px; }
+    .stu-hero-info h2 { font-size: 1.2rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: 7px; }
+    .stu-tags { display: flex; gap: 7px; flex-wrap: wrap; }
+    .stu-tag {
+      font-size: .72rem; font-weight: 600; padding: 3px 10px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 999px; color: var(--text-2);
+    }
 
-    /* chart */
-    .chart-section { margin-bottom: 28px; }
-    .chart-section h3 { font-size: .95rem; font-weight: 700; margin-bottom: 14px; }
-    .chart-area {
-      background: #f8fafc;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 16px 20px;
+    /* Metrics */
+    .metrics-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 26px; }
+    .metric-card {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 16px 18px;
+      text-align: center;
     }
-    .chart-svg { width: 100%; height: 140px; }
+    .metric-val { font-size: 1.7rem; font-weight: 900; letter-spacing: -.04em; color: var(--text-1); line-height: 1; margin-bottom: 4px; }
+    .metric-val .dim { font-size: 1rem; font-weight: 400; color: var(--text-3); }
+    .metric-lbl { font-size: .72rem; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .04em; }
+    .metric-trend { font-size: .72rem; font-weight: 700; color: var(--green); margin-top: 4px; }
 
-    /* notes */
-    .notes-section h3 { font-size: .95rem; font-weight: 700; margin-bottom: 12px; }
-    .note-item {
-      display: flex; gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid #f1f5f9;
-      font-size: .875rem;
+    /* Chart */
+    .chart-card { margin-bottom: 26px; }
+    .chart-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .chart-hdr h3 { font-size: .9rem; font-weight: 700; letter-spacing: -.02em; }
+    .chart-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 16px 8px;
     }
-    .note-date { min-width: 56px; font-size: .78rem; font-weight: 700; color: #64748b; padding-top: 2px; }
-    .note-text { flex: 1; color: #334155; line-height: 1.5; }
-    .add-note-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 12px;
-      background: none; border: 1.5px dashed #cbd5e1;
-      border-radius: 8px; padding: 7px 14px;
-      font-size: .82rem; color: #64748b; cursor: pointer;
-    }
-    .add-note-btn:hover { border-color: #4f46e5; color: #4f46e5; }
 
-    /* ─── Screen label strip ────────────────────────────────────── */
-    .screen-meta {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 16px;
+    /* Notes */
+    .notes-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .notes-hdr h3 { font-size: .9rem; font-weight: 700; letter-spacing: -.02em; }
+    .note-row {
+      display: flex; gap: 14px; padding: 12px 0;
+      border-bottom: 1px solid var(--border-soft);
     }
-    .screen-meta .screen-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; }
-    .screen-meta .screen-sub { font-size: .82rem; color: #64748b; }
+    .note-row:last-of-type { border-bottom: none; }
+    .note-date {
+      min-width: 60px; font-size: .72rem; font-weight: 700; color: var(--text-3);
+      padding-top: 2px;
+    }
+    .note-text { font-size: .82rem; color: var(--text-2); line-height: 1.55; }
+    .note-indicator {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .note-indicator.good { background: var(--green); }
+    .note-indicator.watch { background: var(--amber); }
+
+    /* ══════════════════════════════════════════════════
+       MISC
+    ══════════════════════════════════════════════════ */
+    .mt-4  { margin-top: 4px; }
+    .mt-8  { margin-top: 8px; }
+    .mt-14 { margin-top: 14px; }
+    .text-muted { color: var(--text-3); font-size: .78rem; }
   </style>
 </head>
 <body>
 
-<div class="page-header">
-  <div>
-    <h1>iLEARN — Wireframe Preview</h1>
-    <span>AI-native wireframing toolchain · Open Design · Draftboard · WireMD</span>
+<!-- Shell header -->
+<header class="shell-header">
+  <div class="shell-logo">
+    <div class="logo-mark">iL</div>
+    iLEARN
+    <span class="shell-pill">Preview</span>
   </div>
-</div>
-
-<!-- Tab bar -->
-<div class="tabs">
-  <div class="tab active" onclick="showScreen('teacher-dashboard', this)">🏫 Teacher Dashboard</div>
-  <div class="tab" onclick="showScreen('student-path', this)">📱 Student Learning Path</div>
-  <div class="tab" onclick="showScreen('progress-report', this)">📊 Progress Report</div>
-</div>
+  <div class="shell-tabs">
+    <button class="shell-tab active" onclick="show('s1',this)">
+      <span class="tab-dot"></span>Teacher Dashboard
+    </button>
+    <button class="shell-tab" onclick="show('s2',this)">
+      <span class="tab-dot"></span>Student Learning Path
+    </button>
+    <button class="shell-tab" onclick="show('s3',this)">
+      <span class="tab-dot"></span>Progress Report
+    </button>
+  </div>
+  <div style="font-size:.75rem;color:var(--text-3);font-weight:500;">Design · v1.0</div>
+</header>
 
 <div class="screens">
 
-  <!-- ══════════════════════════════════════════════════════════
-       SCREEN 1: Teacher Dashboard
-  ══════════════════════════════════════════════════════════════ -->
-  <div id="teacher-dashboard" class="screen active">
-    <div class="screen-meta">
-      <span class="screen-title">Teacher Dashboard</span>
-      <span class="screen-sub">Desktop · 1440×900 · Draftboard + WireMD</span>
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 1 — TEACHER DASHBOARD
+  ════════════════════════════════════════════════════════ -->
+  <div id="s1" class="screen active">
+    <div class="screen-label">
+      <h2>Teacher Dashboard</h2>
+      <span class="sl-badge">Desktop</span>
+      <span class="sl-meta">1440 × 900</span>
     </div>
-    <div class="dash-frame">
 
-      <!-- Nav -->
-      <nav class="dash-nav">
-        <span class="brand">iLEARN</span>
-        <div class="nav-right">
-          <button class="icon-btn">🔔 Notifications</button>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div class="avatar">MH</div>
-            <span>Ms. Harris</span>
+    <div class="dash-wrap">
+      <!-- App nav -->
+      <nav class="app-nav">
+        <div class="app-nav-left">
+          <div class="app-brand">
+            <div class="app-brand-mark">iL</div>
+            iLEARN
           </div>
+          <div class="nav-links">
+            <div class="nav-link active">Dashboard</div>
+            <div class="nav-link">My Class</div>
+            <div class="nav-link">Lessons</div>
+            <div class="nav-link">Reports</div>
+          </div>
+        </div>
+        <div class="app-nav-right">
+          <div class="nav-icon-btn">🔍</div>
+          <div class="nav-icon-btn" style="position:relative;">
+            🔔
+            <span style="position:absolute;top:6px;right:6px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:2px solid #fff;"></span>
+          </div>
+          <div class="nav-avatar">MH</div>
         </div>
       </nav>
 
-      <div class="dash-body">
+      <div class="dash-layout">
         <!-- Sidebar -->
         <aside class="dash-sidebar">
-          <div class="sidebar-item active">🏠 &nbsp;Home</div>
-          <div class="sidebar-item">📚 &nbsp;My Class</div>
-          <div class="sidebar-item">📈 &nbsp;Statistics</div>
-          <div class="sidebar-item">⚙️ &nbsp;Settings</div>
+          <div class="sidebar-section-label">Main</div>
+          <div class="sidebar-link active"><span class="sl-icon">⬛</span> Dashboard</div>
+          <div class="sidebar-link"><span class="sl-icon">👥</span> My Class <span class="sl-count">8</span></div>
+          <div class="sidebar-link"><span class="sl-icon">📖</span> Lessons</div>
+          <div class="sidebar-link"><span class="sl-icon">📊</span> Reports</div>
+          <div class="sidebar-divider"></div>
+          <div class="sidebar-section-label">Schedule</div>
+          <div class="sidebar-link"><span class="sl-icon">📅</span> Calendar</div>
+          <div class="sidebar-link"><span class="sl-icon">🔔</span> Notifications <span class="sl-count">3</span></div>
+          <div class="sidebar-divider"></div>
+          <div class="sidebar-section-label">Account</div>
+          <div class="sidebar-link"><span class="sl-icon">⚙️</span> Settings</div>
         </aside>
 
         <!-- Main -->
         <main class="dash-main">
-          <div class="dash-greeting">Good morning, Ms. Harris 👋</div>
+          <div class="dash-header">
+            <h1>Good morning, Ms. Harris 👋</h1>
+            <p>Here's your class overview for Monday, 25 August 2026</p>
+          </div>
 
           <!-- KPIs -->
-          <div class="kpi-row">
-            <div class="kpi-card">
-              <div class="kpi-icon">📊</div>
-              <div class="kpi-label">Attendance</div>
-              <div class="kpi-value">94%</div>
-              <div class="kpi-trend">↑ +2% this week</div>
+          <div class="kpi-grid">
+            <div class="kpi-card k1">
+              <div class="kpi-top">
+                <div class="kpi-icon-wrap ki1">📊</div>
+                <span class="kpi-trend-chip up">↑ +2%</span>
+              </div>
+              <div class="kpi-value">94<span style="font-size:1.1rem;font-weight:500;color:var(--text-3);">%</span></div>
+              <div class="kpi-label">Attendance this week</div>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-icon">🎓</div>
-              <div class="kpi-label">Avg. Progress</div>
-              <div class="kpi-value">78%</div>
-              <div class="kpi-trend">↑ +5% this month</div>
+            <div class="kpi-card k2">
+              <div class="kpi-top">
+                <div class="kpi-icon-wrap ki2">🎓</div>
+                <span class="kpi-trend-chip up">↑ +5%</span>
+              </div>
+              <div class="kpi-value">78<span style="font-size:1.1rem;font-weight:500;color:var(--text-3);">%</span></div>
+              <div class="kpi-label">Average progress</div>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-icon">⚡</div>
-              <div class="kpi-label">Engagement</div>
-              <div class="kpi-value" style="font-size:1.4rem;">High</div>
-              <div class="kpi-trend" style="color:#64748b;">→ Stable</div>
+            <div class="kpi-card k3">
+              <div class="kpi-top">
+                <div class="kpi-icon-wrap ki3">⚡</div>
+                <span class="kpi-trend-chip flat">→ Stable</span>
+              </div>
+              <div class="kpi-value" style="font-size:1.5rem;">High</div>
+              <div class="kpi-label">Class engagement</div>
             </div>
           </div>
 
-          <!-- Class List -->
-          <div class="section-head">
-            <h3>Class List</h3>
-            <button class="btn-sm">+ Add Student</button>
-          </div>
-          <table class="class-table">
-            <thead>
-              <tr>
-                <th>Student</th>
-                <th>Current Lesson</th>
-                <th>Progress</th>
-                <th>Last Active</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><div class="student-name"><div class="stu-avatar">AB</div> Alex B.</div></td>
-                <td>Lesson 4 – Phrases</td>
-                <td><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div><span style="font-size:.8rem;color:#64748b;">40%</span></div></td>
-                <td style="font-size:.8rem;color:#64748b;">Today</td>
-              </tr>
-              <tr>
-                <td><div class="student-name"><div class="stu-avatar" style="background:#bfdbfe;color:#1d4ed8;">ST</div> Sam T.</div></td>
-                <td>Lesson 7 – Stories</td>
-                <td><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div><span style="font-size:.8rem;color:#64748b;">70%</span></div></td>
-                <td style="font-size:.8rem;color:#64748b;">Yesterday</td>
-              </tr>
-              <tr>
-                <td><div class="student-name"><div class="stu-avatar" style="background:#fce7f3;color:#9d174d;">JM</div> Jordan M.</div></td>
-                <td>Lesson 2 – Sounds</td>
-                <td><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div><span style="font-size:.8rem;color:#64748b;">20%</span></div></td>
-                <td style="font-size:.8rem;color:#64748b;">3 days ago</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Upcoming Sessions -->
-          <div class="section-head">
-            <h3>Upcoming Sessions</h3>
-          </div>
-          <div class="session-list">
-            <div class="session-item">
-              <span class="session-time">Mon 10:00</span>
-              <span class="session-title">Group A – Social Skills</span>
-              <span class="badge badge-group">Group</span>
+          <div class="dash-grid">
+            <!-- Left: class table -->
+            <div>
+              <div class="section-hdr">
+                <h3>Class List</h3>
+                <div class="hdr-right">
+                  <div class="search-input">🔍 Search students…</div>
+                  <button class="btn btn-primary" style="padding:7px 14px;">+ Add Student</button>
+                </div>
+              </div>
+              <div class="card" style="overflow:hidden;">
+                <table class="student-table">
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Lesson</th>
+                      <th>Progress</th>
+                      <th>Last Active</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="stu-cell">
+                          <div class="stu-av" style="background:#ede9fe;color:#5b50f0;">AB</div>
+                          <div><div class="stu-name">Alex B.</div><div class="stu-prog">Speech &amp; Language</div></div>
+                        </div>
+                      </td>
+                      <td><span style="font-size:.8rem;color:var(--text-2);">Lesson 4 — Phrases</span></td>
+                      <td>
+                        <div class="prog-cell">
+                          <div class="prog-bar-sm"><div class="prog-fill-sm" style="width:40%"></div></div>
+                          <span class="prog-pct">40%</span>
+                        </div>
+                      </td>
+                      <td class="text-muted">Today</td>
+                      <td><span class="pill pill-purple">Active</span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="stu-cell">
+                          <div class="stu-av" style="background:#dbeafe;color:#1d4ed8;">ST</div>
+                          <div><div class="stu-name">Sam T.</div><div class="stu-prog">Social Communication</div></div>
+                        </div>
+                      </td>
+                      <td><span style="font-size:.8rem;color:var(--text-2);">Lesson 7 — Stories</span></td>
+                      <td>
+                        <div class="prog-cell">
+                          <div class="prog-bar-sm"><div class="prog-fill-sm" style="width:70%;background:var(--green);"></div></div>
+                          <span class="prog-pct">70%</span>
+                        </div>
+                      </td>
+                      <td class="text-muted">Yesterday</td>
+                      <td><span class="pill pill-green">On Track</span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="stu-cell">
+                          <div class="stu-av" style="background:#fce7f3;color:#9d174d;">JM</div>
+                          <div><div class="stu-name">Jordan M.</div><div class="stu-prog">Literacy Skills</div></div>
+                        </div>
+                      </td>
+                      <td><span style="font-size:.8rem;color:var(--text-2);">Lesson 2 — Sounds</span></td>
+                      <td>
+                        <div class="prog-cell">
+                          <div class="prog-bar-sm"><div class="prog-fill-sm" style="width:20%;background:var(--amber);"></div></div>
+                          <span class="prog-pct">20%</span>
+                        </div>
+                      </td>
+                      <td class="text-muted">3 days ago</td>
+                      <td><span class="pill pill-amber">Needs Support</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div class="session-item">
-              <span class="session-time">Tue 14:00</span>
-              <span class="session-title">1:1 – Alex B. (Speech &amp; Language)</span>
-              <span class="badge badge-1on1">1:1</span>
+
+            <!-- Right: sessions -->
+            <div>
+              <div class="section-hdr">
+                <h3>Upcoming Sessions</h3>
+                <button class="btn btn-ghost" style="font-size:.78rem;">View all →</button>
+              </div>
+              <div class="session-card">
+                <div class="sess-time-block">
+                  <div class="sess-day">Mon</div>
+                  <div class="sess-hour">10:00</div>
+                </div>
+                <div class="sess-info">
+                  <div class="sess-title">Group A — Social Skills</div>
+                  <div class="sess-meta">
+                    <span class="pill pill-blue">Group · 4 students</span>
+                  </div>
+                </div>
+              </div>
+              <div class="session-card">
+                <div class="sess-time-block">
+                  <div class="sess-day">Tue</div>
+                  <div class="sess-hour">14:00</div>
+                </div>
+                <div class="sess-info">
+                  <div class="sess-title">Alex B. — Speech &amp; Language</div>
+                  <div class="sess-meta">
+                    <span class="pill pill-purple">1:1 Session</span>
+                  </div>
+                </div>
+              </div>
+              <div class="session-card">
+                <div class="sess-time-block">
+                  <div class="sess-day">Wed</div>
+                  <div class="sess-hour">11:30</div>
+                </div>
+                <div class="sess-info">
+                  <div class="sess-title">Jordan M. — Literacy Review</div>
+                  <div class="sess-meta">
+                    <span class="pill pill-amber">Support Session</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </main>
@@ -502,54 +839,66 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════════
-       SCREEN 2: Student Learning Path  (mobile)
-  ══════════════════════════════════════════════════════════════ -->
-  <div id="student-path" class="screen">
-    <div class="screen-meta">
-      <span class="screen-title">Student Learning Path</span>
-      <span class="screen-sub">Mobile · 375×812 · Draftboard + WireMD</span>
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 2 — STUDENT LEARNING PATH
+  ════════════════════════════════════════════════════════ -->
+  <div id="s2" class="screen">
+    <div class="screen-label">
+      <h2>Student Learning Path</h2>
+      <span class="sl-badge">Mobile</span>
+      <span class="sl-meta">390 × 844 (iPhone 14)</span>
     </div>
-    <div class="mobile-shell">
-      <!-- Top bar -->
-      <div class="mobile-topbar">
-        <span class="back">← Back</span>
-        <span>iLEARN</span>
-        <span>🔔</span>
-      </div>
-
-      <div class="mobile-body">
-        <div class="mob-greeting">Hi, Alex! 👋</div>
-        <div class="mob-sub">Keep going – you're doing great!</div>
-
-        <!-- Overall progress -->
-        <div class="overall-progress">
-          <div class="prog-label">Overall Progress</div>
-          <div class="big-bar"><div class="big-fill"></div></div>
-          <div class="prog-count">6 of 10 lessons completed · 60%</div>
+    <div class="mobile-preview">
+      <div class="phone-shell">
+        <div class="phone-status">
+          <span>9:41</span>
+          <span>●●●</span>
+          <span>📶 100%</span>
         </div>
 
-        <!-- Lesson list -->
-        <div class="path-heading">Your Learning Path</div>
-        <ul class="lesson-list">
-          <li class="lesson-item completed"><span class="lesson-icon">✅</span> Lesson 1 – Introduction</li>
-          <li class="lesson-item completed"><span class="lesson-icon">✅</span> Lesson 2 – Sounds</li>
-          <li class="lesson-item completed"><span class="lesson-icon">✅</span> Lesson 3 – Words</li>
-          <li class="lesson-item current"><span class="lesson-icon">▶️</span> Lesson 4 – Phrases</li>
-          <li class="lesson-item locked"><span class="lesson-icon">🔒</span> Lesson 5 – Sentences</li>
-          <li class="lesson-item locked"><span class="lesson-icon">🔒</span> Lesson 6 – Stories</li>
-        </ul>
+        <div class="mob-header">
+          <div class="mob-nav">
+            <span class="mob-back">← Back</span>
+            <span class="mob-brand">iLEARN</span>
+            <span class="mob-notif">🔔</span>
+          </div>
+          <div class="mob-greeting">Hi, Alex! 👋</div>
+          <div class="mob-sub">Keep going — you're doing great.</div>
+        </div>
 
-        <button class="cta-btn">Start Lesson 4</button>
+        <div class="mob-body" style="padding-top:24px;">
+          <!-- Overall progress card -->
+          <div class="overall-card">
+            <div class="ov-top">
+              <span class="ov-label">Overall Progress</span>
+              <span class="ov-pct">60%</span>
+            </div>
+            <div class="progress-bar-wrap" style="height:8px;">
+              <div class="progress-bar-fill" style="width:60%;background:linear-gradient(90deg,#5b50f0,#818cf8);"></div>
+            </div>
+            <div class="ov-sub">6 of 10 lessons completed · 4 remaining</div>
+          </div>
 
-        <!-- Badge -->
-        <div class="badge-section">
-          <h4>🏅 Latest Badge</h4>
+          <!-- Lesson list -->
+          <div class="lessons-heading">Your Learning Path</div>
+          <ul class="lesson-list">
+            <li class="lesson-item done"><span class="li-icon">✅</span><span class="li-text">Lesson 1 — Introduction</span></li>
+            <li class="lesson-item done"><span class="li-icon">✅</span><span class="li-text">Lesson 2 — Sounds</span></li>
+            <li class="lesson-item done"><span class="li-icon">✅</span><span class="li-text">Lesson 3 — Words</span></li>
+            <li class="lesson-item now"><span class="li-icon">▶️</span><span class="li-text">Lesson 4 — Phrases</span><span class="li-tag">Current</span></li>
+            <li class="lesson-item lock"><span class="li-icon">🔒</span><span class="li-text">Lesson 5 — Sentences</span></li>
+            <li class="lesson-item lock"><span class="li-icon">🔒</span><span class="li-text">Lesson 6 — Stories</span></li>
+          </ul>
+
+          <button class="cta-btn">▶  Start Lesson 4</button>
+
+          <!-- Badge -->
+          <div class="lessons-heading" style="margin-bottom:10px;">🏅 Latest Achievement</div>
           <div class="badge-card">
-            <span class="badge-icon">🌟</span>
+            <div class="badge-icon-wrap">🌟</div>
             <div>
-              <div class="badge-name">Word Explorer</div>
-              <div class="badge-date">Earned yesterday</div>
+              <div class="badge-title">Word Explorer</div>
+              <div class="badge-sub">Earned yesterday · Keep it up!</div>
             </div>
           </div>
         </div>
@@ -557,151 +906,171 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════════
-       SCREEN 3: Student Progress Report
-  ══════════════════════════════════════════════════════════════ -->
-  <div id="progress-report" class="screen">
-    <div class="screen-meta">
-      <span class="screen-title">Student Progress Report</span>
-      <span class="screen-sub">Desktop · 1440×900 · Draftboard + WireMD</span>
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 3 — PROGRESS REPORT
+  ════════════════════════════════════════════════════════ -->
+  <div id="s3" class="screen">
+    <div class="screen-label">
+      <h2>Student Progress Report</h2>
+      <span class="sl-badge">Desktop</span>
+      <span class="sl-meta">1440 × 900</span>
     </div>
-    <div class="report-frame">
 
+    <div class="report-wrap">
       <!-- Top bar -->
       <div class="report-topbar">
         <div class="breadcrumb">
-          iLEARN <span class="sep">›</span> Class <span class="sep">›</span> <span class="current">Alex B.</span>
+          <span class="bc-item">iLEARN</span>
+          <span class="bc-sep">›</span>
+          <span class="bc-item">Class</span>
+          <span class="bc-sep">›</span>
+          <span class="bc-current">Alex B.</span>
         </div>
-        <div class="report-actions">
-          <button class="btn-export">Export PDF</button>
-          <button class="btn-export" style="border-color:#e2e8f0;color:#64748b;">⚙️</button>
+        <div class="tb-actions">
+          <button class="btn btn-secondary">⬇ Export PDF</button>
+          <button class="btn btn-secondary">⚙️</button>
         </div>
       </div>
 
-      <div class="report-body">
+      <div class="report-layout">
         <!-- Sidebar -->
         <aside class="report-sidebar">
-          <div class="time-tab active">Overview</div>
-          <div class="time-tab">Weekly</div>
-          <div class="time-tab">Monthly</div>
-          <div class="time-tab">All Time</div>
+          <div class="rs-label">Time Range</div>
+          <div class="rs-tab active">Overview</div>
+          <div class="rs-tab">Weekly</div>
+          <div class="rs-tab">Monthly</div>
+          <div class="rs-tab">All Time</div>
         </aside>
 
         <!-- Main -->
         <div class="report-main">
-
-          <!-- Student header -->
-          <div class="student-header">
-            <div class="big-avatar">AB</div>
-            <div class="stu-info">
+          <!-- Student hero -->
+          <div class="stu-hero">
+            <div class="big-av">AB</div>
+            <div class="stu-hero-info">
               <h2>Alex B.</h2>
-              <div class="stu-meta">
-                <span>Age: 9</span>
-                <span>Speech &amp; Language</span>
-                <span>Ms. Harris</span>
-                <span>Started Jan 2026</span>
+              <div class="stu-tags">
+                <span class="stu-tag">Age 9</span>
+                <span class="stu-tag">Speech &amp; Language</span>
+                <span class="stu-tag">Ms. Harris</span>
+                <span class="stu-tag">Started Jan 2026</span>
               </div>
             </div>
           </div>
 
-          <!-- KPIs -->
-          <div class="kpi-row" style="margin-bottom:24px;">
-            <div class="kpi-card">
-              <div class="kpi-label">Lessons Completed</div>
-              <div class="kpi-value">4<span style="font-size:1rem;font-weight:400;color:#94a3b8;"> / 10</span></div>
+          <!-- Metrics -->
+          <div class="metrics-row">
+            <div class="metric-card">
+              <div class="metric-val">4<span class="dim"> / 10</span></div>
+              <div class="metric-lbl">Lessons Completed</div>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Total Sessions</div>
-              <div class="kpi-value">12</div>
+            <div class="metric-card">
+              <div class="metric-val">12</div>
+              <div class="metric-lbl">Total Sessions</div>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Average Score</div>
-              <div class="kpi-value">82%</div>
-              <div class="kpi-trend">↑ Improving</div>
+            <div class="metric-card">
+              <div class="metric-val">82<span class="dim">%</span></div>
+              <div class="metric-lbl">Average Score</div>
+              <div class="metric-trend">↑ +27pts since Jan</div>
             </div>
           </div>
 
           <!-- Chart -->
-          <div class="chart-section">
-            <h3>Progress Over Time</h3>
-            <div class="chart-area">
-              <svg class="chart-svg" viewBox="0 0 600 140" xmlns="http://www.w3.org/2000/svg">
-                <!-- Grid lines -->
-                <line x1="40" y1="10"  x2="580" y2="10"  stroke="#e2e8f0" stroke-width="1"/>
-                <line x1="40" y1="45"  x2="580" y2="45"  stroke="#e2e8f0" stroke-width="1"/>
-                <line x1="40" y1="80"  x2="580" y2="80"  stroke="#e2e8f0" stroke-width="1"/>
-                <line x1="40" y1="115" x2="580" y2="115" stroke="#e2e8f0" stroke-width="1"/>
-                <!-- Y labels -->
-                <text x="28" y="14"  font-size="11" fill="#94a3b8" text-anchor="end">100</text>
-                <text x="28" y="49"  font-size="11" fill="#94a3b8" text-anchor="end">75</text>
-                <text x="28" y="84"  font-size="11" fill="#94a3b8" text-anchor="end">50</text>
-                <text x="28" y="119" font-size="11" fill="#94a3b8" text-anchor="end">25</text>
-                <!-- Area fill -->
-                <polygon
-                  points="
-                    40,115
-                    40,83  108,76  176,70  244,58  312,47  380,38
-                    380,115
-                  "
-                  fill="#eef2ff" opacity="0.7"/>
+          <div class="chart-card">
+            <div class="chart-hdr">
+              <h3>Score Progression</h3>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <span style="display:flex;align-items:center;gap:5px;font-size:.75rem;color:var(--text-3);">
+                  <span style="display:inline-block;width:20px;height:2.5px;background:var(--brand);border-radius:2px;"></span>Score
+                </span>
+                <button class="btn btn-ghost" style="font-size:.75rem;padding:4px 10px;">Jan – Jun 2026</button>
+              </div>
+            </div>
+            <div class="chart-container">
+              <svg viewBox="0 0 640 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:160px;display:block;">
+                <defs>
+                  <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#5b50f0" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#5b50f0" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <!-- Grid -->
+                <line x1="48" y1="14"  x2="620" y2="14"  stroke="#eef0f6" stroke-width="1"/>
+                <line x1="48" y1="47"  x2="620" y2="47"  stroke="#eef0f6" stroke-width="1"/>
+                <line x1="48" y1="80"  x2="620" y2="80"  stroke="#eef0f6" stroke-width="1"/>
+                <line x1="48" y1="113" x2="620" y2="113" stroke="#eef0f6" stroke-width="1"/>
+                <!-- Y axis labels -->
+                <text x="40" y="18"  font-size="10" fill="#8b92a8" text-anchor="end" font-family="Inter,sans-serif">100</text>
+                <text x="40" y="51"  font-size="10" fill="#8b92a8" text-anchor="end" font-family="Inter,sans-serif">75</text>
+                <text x="40" y="84"  font-size="10" fill="#8b92a8" text-anchor="end" font-family="Inter,sans-serif">50</text>
+                <text x="40" y="117" font-size="10" fill="#8b92a8" text-anchor="end" font-family="Inter,sans-serif">25</text>
+                <!-- Area -->
+                <polygon points="48,100 150,92 252,85 354,68 456,52 558,38 558,130 48,130" fill="url(#grad)"/>
                 <!-- Line -->
-                <polyline
-                  points="40,83  108,76  176,70  244,58  312,47  380,38"
-                  fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                <polyline points="48,100 150,92 252,85 354,68 456,52 558,38"
+                  fill="none" stroke="#5b50f0" stroke-width="2.5"
+                  stroke-linejoin="round" stroke-linecap="round"/>
                 <!-- Dots -->
-                <circle cx="40"  cy="83" r="4" fill="#4f46e5"/>
-                <circle cx="108" cy="76" r="4" fill="#4f46e5"/>
-                <circle cx="176" cy="70" r="4" fill="#4f46e5"/>
-                <circle cx="244" cy="58" r="4" fill="#4f46e5"/>
-                <circle cx="312" cy="47" r="4" fill="#4f46e5"/>
-                <circle cx="380" cy="38" r="5" fill="#4f46e5" stroke="#fff" stroke-width="2"/>
-                <!-- X labels -->
-                <text x="40"  y="132" font-size="11" fill="#94a3b8" text-anchor="middle">Jan</text>
-                <text x="108" y="132" font-size="11" fill="#94a3b8" text-anchor="middle">Feb</text>
-                <text x="176" y="132" font-size="11" fill="#94a3b8" text-anchor="middle">Mar</text>
-                <text x="244" y="132" font-size="11" fill="#94a3b8" text-anchor="middle">Apr</text>
-                <text x="312" y="132" font-size="11" fill="#94a3b8" text-anchor="middle">May</text>
-                <text x="380" y="132" font-size="11" fill="#94a3b8" text-anchor="middle">Jun</text>
+                <circle cx="48"  cy="100" r="4" fill="#5b50f0" stroke="white" stroke-width="2"/>
+                <circle cx="150" cy="92"  r="4" fill="#5b50f0" stroke="white" stroke-width="2"/>
+                <circle cx="252" cy="85"  r="4" fill="#5b50f0" stroke="white" stroke-width="2"/>
+                <circle cx="354" cy="68"  r="4" fill="#5b50f0" stroke="white" stroke-width="2"/>
+                <circle cx="456" cy="52"  r="4" fill="#5b50f0" stroke="white" stroke-width="2"/>
+                <circle cx="558" cy="38"  r="6" fill="#5b50f0" stroke="white" stroke-width="2.5"/>
                 <!-- Score labels -->
-                <text x="40"  y="77" font-size="10" fill="#4f46e5" text-anchor="middle">55</text>
-                <text x="108" y="70" font-size="10" fill="#4f46e5" text-anchor="middle">60</text>
-                <text x="176" y="64" font-size="10" fill="#4f46e5" text-anchor="middle">65</text>
-                <text x="244" y="52" font-size="10" fill="#4f46e5" text-anchor="middle">72</text>
-                <text x="312" y="41" font-size="10" fill="#4f46e5" text-anchor="middle">78</text>
-                <text x="380" y="32" font-size="10" fill="#4f46e5" text-anchor="middle" font-weight="700">82</text>
+                <text x="48"  y="93"  font-size="10" fill="#5b50f0" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600">55</text>
+                <text x="150" y="85"  font-size="10" fill="#5b50f0" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600">60</text>
+                <text x="252" y="78"  font-size="10" fill="#5b50f0" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600">65</text>
+                <text x="354" y="61"  font-size="10" fill="#5b50f0" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600">72</text>
+                <text x="456" y="45"  font-size="10" fill="#5b50f0" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600">78</text>
+                <text x="558" y="31"  font-size="10" fill="#5b50f0" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">82</text>
+                <!-- X labels -->
+                <text x="48"  y="148" font-size="10" fill="#8b92a8" text-anchor="middle" font-family="Inter,sans-serif">Jan</text>
+                <text x="150" y="148" font-size="10" fill="#8b92a8" text-anchor="middle" font-family="Inter,sans-serif">Feb</text>
+                <text x="252" y="148" font-size="10" fill="#8b92a8" text-anchor="middle" font-family="Inter,sans-serif">Mar</text>
+                <text x="354" y="148" font-size="10" fill="#8b92a8" text-anchor="middle" font-family="Inter,sans-serif">Apr</text>
+                <text x="456" y="148" font-size="10" fill="#8b92a8" text-anchor="middle" font-family="Inter,sans-serif">May</text>
+                <text x="558" y="148" font-size="10" fill="#8b92a8" text-anchor="middle" font-family="Inter,sans-serif">Jun</text>
               </svg>
             </div>
           </div>
 
           <!-- Session Notes -->
-          <div class="notes-section">
-            <h3>Session Notes</h3>
-            <div class="note-item">
+          <div>
+            <div class="notes-hdr">
+              <h3>Session Notes</h3>
+              <button class="btn btn-secondary" style="font-size:.75rem;padding:6px 12px;">+ Add Note</button>
+            </div>
+            <div class="note-row">
               <span class="note-date">22 Aug</span>
-              <span class="note-text">Good focus, completed Lesson 4 independently.</span>
+              <span class="note-indicator good"></span>
+              <span class="note-text">Good focus — completed Lesson 4 independently with minimal prompting.</span>
             </div>
-            <div class="note-item">
+            <div class="note-row">
               <span class="note-date">15 Aug</span>
-              <span class="note-text">Struggled with consonant blends – revisit next session.</span>
+              <span class="note-indicator watch"></span>
+              <span class="note-text">Struggled with consonant blends. Revisit blend clusters in next session before moving forward.</span>
             </div>
-            <button class="add-note-btn">＋ Add Note</button>
+            <div class="note-row">
+              <span class="note-date">08 Aug</span>
+              <span class="note-indicator good"></span>
+              <span class="note-text">Strong session — completed all exercises. Showed enthusiasm during the story activity.</span>
+            </div>
           </div>
-
-        </div><!-- /report-main -->
-      </div><!-- /report-body -->
-    </div><!-- /report-frame -->
+        </div>
+      </div>
+    </div>
   </div>
 
 </div><!-- /screens -->
 
 <script>
-  function showScreen(id, tab) {
+  function show(id, btn) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.shell-tab').forEach(t => t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    tab.classList.add('active');
+    btn.classList.add('active');
   }
 </script>
-
 </body>
 </html>
