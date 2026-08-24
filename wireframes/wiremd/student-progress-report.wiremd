@@ -1,0 +1,58 @@
+# Student Progress Report
+style: wireframe
+
+breadcrumb:
+  items: [iLEARN, Class, Alex B.]
+
+actions:
+  right:
+    - label: Export PDF
+      style: secondary
+    - icon: cog
+
+hero:
+  avatar: true
+  heading: Alex B.
+  meta:
+    - "Age: 9"
+    - "Programme: Speech & Language"
+    - "Teacher: Ms. Harris"
+    - "Started: January 2026"
+
+tabs:
+  items: [Overview, Weekly, Monthly, All Time]
+  active: Overview
+
+row:
+  cols: 3
+  items:
+    - card:
+        label: Lessons Completed
+        value: 4 / 10
+    - card:
+        label: Total Sessions
+        value: 12
+    - card:
+        label: Average Score
+        value: 82%
+
+chart:
+  type: line
+  heading: Progress Over Time
+  x-axis: [Jan, Feb, Mar, Apr, May, Jun]
+  series:
+    - label: Score
+      data: [55, 60, 65, 72, 78, 82]
+
+section:
+  heading: Session Notes
+  list:
+    - item:
+        date: 22 Aug
+        note: Good focus, completed Lesson 4 independently.
+    - item:
+        date: 15 Aug
+        note: Struggled with consonant blends – revisit next session.
+  action:
+    label: + Add Note
+    style: ghost

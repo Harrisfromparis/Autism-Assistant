@@ -1,0 +1,61 @@
+# Teacher Dashboard
+style: wireframe
+
+nav:
+  brand: iLEARN
+  items:
+    - Home
+    - My Class
+    - Statistics
+    - Settings
+  right:
+    - icon: bell
+      label: Notifications
+    - avatar: Ms. Harris
+
+hero:
+  heading: Good morning, Ms. Harris 👋
+  subheading: Here's your class overview for today.
+
+row:
+  cols: 3
+  items:
+    - card:
+        icon: chart-bar
+        label: Attendance
+        value: 94%
+        trend: +2% this week
+    - card:
+        icon: graduation-cap
+        label: Average Progress
+        value: 78%
+        trend: +5% this month
+    - card:
+        icon: lightning-bolt
+        label: Engagement
+        value: High
+        trend: Stable
+
+section:
+  heading: Class List
+  action:
+    label: + Add Student
+    style: secondary
+  table:
+    columns: [Student, Current Lesson, Progress, Last Active]
+    rows:
+      - [Alex B., Lesson 4 – Phrases, 40%, Today]
+      - [Sam T., Lesson 7 – Stories, 70%, Yesterday]
+      - [Jordan M., Lesson 2 – Sounds, 20%, 3 days ago]
+
+section:
+  heading: Upcoming Sessions
+  list:
+    - item:
+        date: Mon 10:00
+        title: Group A – Social Skills
+        tag: Group
+    - item:
+        date: Tue 14:00
+        title: 1:1 – Alex B. (Speech & Language)
+        tag: 1:1

@@ -1,0 +1,53 @@
+# Student Learning Path
+style: wireframe
+viewport: mobile
+
+topbar:
+  left:
+    - icon: arrow-left
+      label: Back
+  center: iLEARN
+  right:
+    - icon: bell
+
+hero:
+  heading: Hi, Alex! 👋
+  subheading: Keep going – you're doing great!
+
+progress:
+  value: 60
+  label: 6 of 10 lessons completed
+
+section:
+  heading: Your Learning Path
+  list:
+    - item:
+        status: completed
+        label: "Lesson 1 – Introduction"
+    - item:
+        status: completed
+        label: "Lesson 2 – Sounds"
+    - item:
+        status: completed
+        label: "Lesson 3 – Words"
+    - item:
+        status: current
+        label: "Lesson 4 – Phrases"
+    - item:
+        status: locked
+        label: "Lesson 5 – Sentences"
+    - item:
+        status: locked
+        label: "Lesson 6 – Stories"
+
+cta:
+  label: Start Lesson 4
+  style: primary
+  full-width: true
+
+section:
+  heading: Latest Badge 🏅
+  card:
+    icon: star
+    title: Word Explorer
+    subtitle: Earned yesterday
